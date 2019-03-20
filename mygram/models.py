@@ -12,11 +12,16 @@ class Image(models.Model):
      likes=models.IntegerField()
      
      profile=models.ForeignKey(Profile)
+     
+     def save_image(self):
+         self.save()
 
-     def save_image()
+     def delete_image(self):
+       self.delete()
+    
 class Comment(models.Model):
     comment=models.TextField()
-    image=models.ForeignKey(Image,default='timezone.now')
+    image=models.ForeignKey(Image,default=0)
 
 
 

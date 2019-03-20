@@ -47,9 +47,9 @@ USER = '&lt;Username&gt;'<br>
 PASSWORD = '&lt;password&gt;'<br>
 DEBUG = True 
 
-<!-- #### Run initial Migrations
+ #### Run initial Migrations
 ```
-$ python manage.py makemigrations citacione<br>
+$ python manage.py makemigrations mygram<br>
 $ python3.6 manage.py migrate
 ```
 
@@ -61,7 +61,7 @@ $ python3.6 manage.py runserver
 ## Running the tests
 
 ```
-$ python3.6 manage.py test citacione
+$ python3.6 manage.py test mygram
 ```
 
 
@@ -76,7 +76,7 @@ Add additional notes about how to deploy this on a live system
 <!-- * [Maven](https://maven.apache.org/) - Dependency Management -->
 <!-- * [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds -->
 
-<!-- ## Contributing
+ <!--## Contributing
 
 Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us. -->
 
@@ -108,4 +108,4 @@ Copyright (c) 2019 **TUYISENGE Anabella**
 
 * Hat tip to anyone whose code was used
 * Inspiration
- -->
+ 

@@ -18,6 +18,10 @@ class Image(models.Model):
 
      def delete_image(self):
        self.delete()
+       
+     def update_caption(self,cap):
+         self.caption=cap
+         self.save()
     
 class Comment(models.Model):
     comment=models.TextField()

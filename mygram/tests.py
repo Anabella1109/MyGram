@@ -22,6 +22,11 @@ class ImageTestClass(TestCase):
            self.image.save_image()
            self.image.delete_image()
            images = Image.objects.all()
-           self.assertTrue(len(images) == 0)  
-           
+           self.assertTrue(len(images) == 0) 
+
+       def test_update_caption(self):
+           self.image.save_image()
+           caption='kiki'
+           self.image.update_caption(caption)
+           self.assertTrue( self.image.caption == caption) 
 # Create your tests here.

@@ -5,7 +5,7 @@ MyGram is a web application where different users can upload their pictures and 
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system. 
 
-<!-- #### Prerequisites
+< #### Prerequisites
 
 * Virtual environment
 * Python3.6
@@ -16,8 +16,8 @@ These instructions will get you a copy of the project up and running on your loc
 #### Cloning
  * In your terminal<br>
  ```
-   $ git clone https://github.com/Anabella1109/Pictures.git
-   $ cd Picures
+   $ git clone https://github.com/Anabella1109/MyGram.git
+   $ cd MyGra,
 ```
 
 #### Activate virtual environment
@@ -25,9 +25,9 @@ These instructions will get you a copy of the project up and running on your loc
 ```
 $ python3.6 -m venv --without-pip virtual 
 $ source venv/bin/activate
-``` -->
+``` 
 
-<!-- #### Installing
+ #### Installing
 
 Install dependancies that will create an environment for the app to run
 ```
@@ -36,18 +36,18 @@ Install dependancies that will create an environment for the app to run
 #### Create Database
 ```
 $ psql
-CREATE DATABASE slica
+CREATE DATABASE mygram
 ```
 #### .env file
 Create .env file and paste paste the following filling where appropriate:
 
 SECRET_KEY = '<Secret_key>'<br>
-DBNAME = 'slika'<br>
+DBNAME = 'mygram'<br>
 USER = '&lt;Username&gt;'<br>
 PASSWORD = '&lt;password&gt;'<br>
-DEBUG = True -->
+DEBUG = True 
 
-#### Run initial Migrations
+<!-- #### Run initial Migrations
 ```
 $ python manage.py makemigrations citacione<br>
 $ python3.6 manage.py migrate
@@ -70,7 +70,7 @@ $ python3.6 manage.py test citacione
 
 Add additional notes about how to deploy this on a live system
 
-## Built With
+## Built With -->
 
 * [Django](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
 <!-- * [Maven](https://maven.apache.org/) - Dependency Management -->

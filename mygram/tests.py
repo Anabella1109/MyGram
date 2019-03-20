@@ -45,4 +45,11 @@ class ProfileTestClass(TestCase):
        def test_save_profile(self):
          self.profile.save_profile()
          profiles = Profile.objects.all()
-         self.assertTrue(len(profiles) > 0)  
+         self.assertTrue(len(profiles) > 0) 
+
+        
+       def test_delete_profile(self):
+           self.profile.save_profile()
+           self.profile.delete_profile()
+           profiles = Profile.objects.all()
+           self.assertTrue(len(profiles) == 0)  

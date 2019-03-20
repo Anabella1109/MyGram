@@ -7,6 +7,8 @@ class Profile(models.Model):
     
     def save_profile(self):
         self.save()
+    def delete_profile(self):
+       self.delete()
 
 class Image(models.Model):
      name=models.CharField(max_length=100)

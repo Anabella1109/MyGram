@@ -4,6 +4,9 @@ from django.db import models
 class Profile(models.Model):
     photo=models.ImageField(upload_to='dps/')
     bio=models.TextField()
+    
+    def save_profile(self):
+        self.save()
 
 class Image(models.Model):
      name=models.CharField(max_length=100)

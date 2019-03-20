@@ -30,3 +30,19 @@ class ImageTestClass(TestCase):
            self.image.update_caption(caption)
            self.assertTrue( self.image.caption == caption) 
 # Create your tests here.
+class ProfileTestClass(TestCase):
+       def setUp(self):
+          
+          self.profile=Profile(id=1234,photo='Rwanda',bio='Kigali')
+          self.image=Image(image='@heroo',name='koko',caption="koko koko koko okruuuuuu",likes=2,profile=self.profile)
+          self.comment=Comment(id=2134,comment='food',image=self.image)
+        
+       def tearDown(self):
+           Profile.objects.all().delete()
+           Image.objects.all().delete()
+           Comment.objects.all().delete()
+       
+       def test_save_profile(self):
+         self.profile.save_profile()
+         profiles = Profile.objects.all()
+         self.assertTrue(len(profiles) > 0)  

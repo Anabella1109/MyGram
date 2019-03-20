@@ -53,3 +53,9 @@ class ProfileTestClass(TestCase):
            self.profile.delete_profile()
            profiles = Profile.objects.all()
            self.assertTrue(len(profiles) == 0)  
+
+       def test_update_caption(self):
+           self.profile.save_profile()
+           bio='kiki'
+           self.profile.update_bio(bio)
+           self.assertTrue( self.profile.bio == bio) 

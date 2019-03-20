@@ -10,6 +10,10 @@ class Profile(models.Model):
     def delete_profile(self):
        self.delete()
 
+    def update_bio(self,bio):
+         self.bio=bio
+         self.save()
+
 class Image(models.Model):
      name=models.CharField(max_length=100)
      image=models.ImageField(upload_to = 'images/')

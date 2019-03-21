@@ -2,6 +2,11 @@
 
 {% block content %}
 {{block.super}}
-
-<h1>Welcomeeeeeeeeee!!!</h1>
+<div class="container">
+{% for post in posts%}
+<p>{{post.user.username}}</p>
+<p>{{post.name}}</p>
+<img src="{{post.image.url}}" alt="" height="300">
+{%endfor%}
+</div>
 {% endblock %}

@@ -3,10 +3,13 @@ from django.http  import HttpResponse,Http404
 from .forms import NewPostForm
 from .email import send_welcome_email
 from django.contrib.auth.decorators import login_required
+from .models import Image, Profile, Comment
 
+@login_required(login_url='/accounts/login/')
 def home(request):
      title='Home | MyGram'
-     return render(request,'grams/home.html',{'title':title})
+     posts=Image.objects.all()
+     return render(request,'grams/home.html',{'title':title , 'posts':posts})
 
 @login_required(login_url='/accounts/login/')
 def new_post(request):

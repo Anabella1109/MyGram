@@ -6,7 +6,8 @@ from django.conf.urls.static import static
 urlpatterns=[
    
     url('^$',views.home,name='home'),
-    url(r'^new/post$', views.new_post, name='new-post')
+    url(r'^new/post$', views.new_post, name='new-post'),
+    url(r'^post/(\d+)',views.post,name ='post') ,
    
 ]
 if settings.DEBUG:

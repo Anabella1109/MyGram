@@ -18,11 +18,16 @@
     {% endautoescape %}
 
    </div>
-
+  <p>{{post.likes}}</p>
+  <a href="/like_post/{{post.id}}"><button>Like</button></a>
    <div class="row">
      <p>Posted {{post.pub_date|timesince}} by {{post.user.username}}</p>
    </div>
-
+  <h3>Comments</h3>
+  {% for comment in comments %}
+  <p>{{comment.post.user.username</p>
+    <p>{{comment.comment}}</p>
+  {%endfor%}
  </div>
 
  {% endblock %}

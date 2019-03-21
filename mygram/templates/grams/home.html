@@ -6,7 +6,7 @@
 {% for post in posts%}
 <p>{{post.user.username}}</p>
 <p>{{post.name}}</p>
-<img src="{{post.image.url}}" alt="" height="300">
+<a href="/post/{{post.id}}"> <img src="{{post.image.url}}" alt="" height="300"></a>
 {%endfor%}
 </div>
 {% endblock %}

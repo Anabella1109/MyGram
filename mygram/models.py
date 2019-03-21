@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Profile(models.Model):
@@ -20,7 +21,7 @@ class Image(models.Model):
      caption=models.TextField()
      likes=models.IntegerField()
      
-     profile=models.ForeignKey(Profile)
+     profile=models.ForeignKey(User,on_delete=models.CASCADE)
      
      def save_image(self):
          self.save()

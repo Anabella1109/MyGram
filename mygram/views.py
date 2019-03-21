@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from django.http  import HttpResponse,Http404
-from .forms import NewPostForm
+from .forms import NewPostForm, NewCommentForm
 from .email import send_welcome_email
 from django.contrib.auth.decorators import login_required
 from .models import Image, Profile, Comment
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login ,current_user
 
 @login_required(login_url='/accounts/login/')
 def home(request):
@@ -48,4 +48,21 @@ def like_post(request,id):
      post.likes+=1
      post.save()
      return redirect('post',id=id)
-# Create your views here.
+
+@login_required(login_url='/accounts/login/')
+def add_comment(request,id):
+        post=Image.objects.get(id=id)
+        if request.method == 'POST':
+               form = NewCommentForm(request.POST)
+               if form.is_valid():
+                    comment= form.cleaned_data['comment']
+                   
+                    new_comment = comment(comment = comment,user =current_user,image=image)
+                    new_comment.save()
+                    
+                    HttpResponseRedirect('home')
+               else:
+                    form = NewCommentForm()
+               return render(request, 'grams/new_comment.html', {"letterForm":form})
+
+     # Create your views here.

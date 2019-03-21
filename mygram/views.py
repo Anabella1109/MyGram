@@ -60,12 +60,12 @@ def add_comment(request,id):
                if form.is_valid():
                     comment= form.cleaned_data['comment']
                    
-                    new_comment = comment(comment = comment,user =current_user,image=image)
+                    new_comment = Comment(comment = comment,user =current_user,image=post)
                     new_comment.save()
                     
                     HttpResponseRedirect('home')
-               else:
+        else:
                     form = NewCommentForm()
-               return render(request, 'grams/new_comment.html', {"letterForm":form})
+        return render(request, 'grams/new_comment.html', {"letterForm":form,'post':post,'user':current_user})
 
      # Create your views here.

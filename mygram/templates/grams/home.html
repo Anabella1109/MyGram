@@ -8,6 +8,7 @@
 <p>{{post.name}}</p>
 <a href="/post/{{post.id}}"> <img src="{{post.image.url}}" alt="" height="300"></a>
 <a href="/like_home/{{post.id}}"><button>Like</button></a>
+<a href="/new_comment/{{post.id}}"><button>Comment</button></a>
 {%endfor%}
 </div>
 {% endblock %}

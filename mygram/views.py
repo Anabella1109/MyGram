@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect
-from django.http  import HttpResponse,Http404
+from django.http  import HttpResponse,Http404,HttpResponseRedirect
+
 from .forms import NewPostForm, NewCommentForm
 from .email import send_welcome_email
 from django.contrib.auth.decorators import login_required
 from .models import Image, Profile, Comment
-from django.contrib.auth import authenticate, login ,current_user
+from django.contrib.auth import authenticate, login 
+
 
 @login_required(login_url='/accounts/login/')
 def home(request):
@@ -51,6 +53,7 @@ def like_post(request,id):
 
 @login_required(login_url='/accounts/login/')
 def add_comment(request,id):
+        current_user = request.user
         post=Image.objects.get(id=id)
         if request.method == 'POST':
                form = NewCommentForm(request.POST)

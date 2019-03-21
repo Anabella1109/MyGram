@@ -4,6 +4,7 @@ from .forms import NewPostForm
 from .email import send_welcome_email
 from django.contrib.auth.decorators import login_required
 from .models import Image, Profile, Comment
+from django.contrib.auth import authenticate, login
 
 @login_required(login_url='/accounts/login/')
 def home(request):
@@ -34,15 +35,17 @@ def post(request,id):
     comments=Comment.objects.filter(image=post)
     return render(request, 'grams/post.html', {"post": post, 'comments':comments})
 
-# @login_required(login_url='/accounts/login/')
-# def like_home(request,id):
-#      post=Image.objects.filter(id=id)
-#      post.likes=+1
-#      return redirect('home')
+@login_required(login_url='/accounts/login/')
+def like_home(request,id):
+     post=Image.objects.get(id=id)
+     post.likes+=1
+     post.save()
+     return redirect('home')
 
-# @login_required(login_url='/accounts/login/')
-# def like_post(request,id):
-#      post=Image.objects.filter(id=id)
-#      post.likes=+1
-#      return redirect('post/post.id')
+@login_required(login_url='/accounts/login/')
+def like_post(request,id):
+     post=Image.objects.get(id=id)
+     post.likes+=1
+     post.save()
+     return redirect('post',id=id)
 # Create your views here.

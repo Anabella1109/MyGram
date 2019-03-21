@@ -7,6 +7,7 @@
 <p>{{post.user.username}}</p>
 <p>{{post.name}}</p>
 <a href="/post/{{post.id}}"> <img src="{{post.image.url}}" alt="" height="300"></a>
+<a href="/like_home/{{post.id}}"><button>Like</button></a>
 {%endfor%}
 </div>
 {% endblock %}

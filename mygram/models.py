@@ -36,6 +36,15 @@ class Comment(models.Model):
     comment=models.TextField()
     image=models.ForeignKey(Image,default=0)
 
+    def save_comment(self):
+        self.save()
+    def delete_comment(self):
+       self.delete()
+
+    def update_comment(self,comment):
+         self.comment=comment
+         self.save()
+
 
 
 

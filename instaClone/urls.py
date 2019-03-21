@@ -19,6 +19,7 @@ from django.contrib.auth import views
 
 urlpatterns = [
     url(r'^accounts/', include('registration.backends.hmac.urls')),
+    url(r'^tinymce/', include('tinymce.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'',include('mygram.urls')),
      url(r'^logout/$', views.logout, {"next_page": '/'})

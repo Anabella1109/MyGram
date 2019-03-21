@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'mygram',
+    'tinymce',
     'bootstrap3',
     'django.contrib.admin',
     'django.contrib.auth',

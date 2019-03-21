@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from tinymce.models import HTMLField
 
 
 class Profile(models.Model):
@@ -18,10 +19,11 @@ class Profile(models.Model):
 class Image(models.Model):
      name=models.CharField(max_length=100)
      image=models.ImageField(upload_to = 'images/')
-     caption=models.TextField()
+     caption=HTMLField()
      likes=models.IntegerField()
-     
-     profile=models.ForeignKey(User,on_delete=models.CASCADE)
+     pub_date = models.DateTimeField(auto_now_add=True)
+     profile=models.ForeignKey(Profile, null=True)
+     user=models.ForeignKey(User,on_delete=models.CASCADE)
      
      def save_image(self):
          self.save()

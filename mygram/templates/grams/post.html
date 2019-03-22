@@ -18,8 +18,9 @@
     {% endautoescape %}
 
    </div>
-  <p>{{post.likes}}</p>
-  <a href="/like_post/{{post.id}}"><button>Like</button></a>
+  
+  <a href="/like_post/{{post.id}}"><button><i class="glyphicon glyphicon-heart glyphicon-lg"></i><span>{{post.likes}}</span></button></a>
+  <a href="/new_comment/{{post.id}}"><p> comments {{comments|length}}</p></a>
    <div class="row">
      <p>Posted {{post.pub_date|timesince}} by {{post.user.username}}</p>
    </div>

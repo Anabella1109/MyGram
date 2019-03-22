@@ -5,7 +5,7 @@ MyGram is a web application where different users can upload their pictures and 
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system. 
 
-< #### Prerequisites
+ #### Prerequisites
 
 * Virtual environment
 * Python3.6
@@ -17,7 +17,7 @@ These instructions will get you a copy of the project up and running on your loc
  * In your terminal<br>
  ```
    $ git clone https://github.com/Anabella1109/MyGram.git
-   $ cd MyGra,
+   $ cd MyGram
 ```
 
 #### Activate virtual environment
@@ -49,7 +49,7 @@ DEBUG = True
 
  #### Run initial Migrations
 ```
-$ python manage.py makemigrations mygram<br>
+$ python manage.py makemigrations mygram 
 $ python3.6 manage.py migrate
 ```
 
@@ -70,7 +70,7 @@ $ python3.6 manage.py test mygram
 
 Add additional notes about how to deploy this on a live system
 
-## Built With -->
+## Built With 
 
 * [Django](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
 <!-- * [Maven](https://maven.apache.org/) - Dependency Management -->

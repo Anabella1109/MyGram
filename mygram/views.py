@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http  import HttpResponse,Http404,HttpResponseRedirect
-
+from django.contrib.auth.models import User
 from .forms import NewPostForm, NewCommentForm
 from .email import send_welcome_email
 from django.contrib.auth.decorators import login_required
@@ -8,7 +8,7 @@ from .models import Image, Profile, Comment
 from django.contrib.auth import authenticate, login 
 
 
-@login_required(login_url='/accounts/login/')
+@login_required(login_url='/accounts/register/')
 def home(request):
      title='Home | MyGram'
      posts=Image.objects.all()
@@ -68,4 +68,21 @@ def add_comment(request,id):
                     form = NewCommentForm()
         return render(request, 'grams/new_comment.html', {"letterForm":form,'post':post,'user':current_user})
 
-     # Create your views here.
+def search_results(request):
+
+    if 'user' in request.GET and request.GET["user"]:
+        search_term = request.GET.get("user")
+        searched_users = search_by_username(search_term)
+        message = f"{search_term}"
+
+        return render(request, 'grams/search.html',{"message":message,"users": searched_users})
+
+    else:
+        message = "You haven't searched for any term"
+        return render(request, 'grams/search.html',{"message":message})
+
+     
+
+def search_by_username(name):
+       users=User.objects.filter(username__icontains=name)
+       return users

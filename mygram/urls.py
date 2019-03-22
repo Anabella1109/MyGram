@@ -11,6 +11,7 @@ urlpatterns=[
     url(r'^like_home/(\d+)',views.like_home,name ='like1') ,
     url(r'^like_post/(\d+)',views.like_post,name ='like2') ,
     url(r'^new_comment/(\d+)',views.add_comment,name ='comment') ,
+    url(r'^search/', views.search_results, name='search_results'),
    
 ]
 if settings.DEBUG:

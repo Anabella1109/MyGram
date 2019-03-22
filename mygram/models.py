@@ -1,12 +1,15 @@
 from django.db import models
 from django.contrib.auth.models import User
 from tinymce.models import HTMLField
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 
 
 class Profile(models.Model):
-    photo=models.ImageField(upload_to='dps/')
+    photo=models.ImageField(upload_to='images/')
     bio=models.TextField()
-    user=models.ForeignKey(User,on_delete=models.CASCADE,null=True)
+    user=models.OneToOneField(User,on_delete=models.CASCADE,null=True)
     
     def save_profile(self):
         self.save()
@@ -16,6 +19,12 @@ class Profile(models.Model):
     def update_bio(self,bio):
          self.bio=bio
          self.save()
+
+@receiver(post_save, sender=User)
+def update_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+    instance.profile.save()
 
 class Image(models.Model):
      name=models.CharField(max_length=100)
@@ -48,6 +57,8 @@ class Comment(models.Model):
     def update_comment(self,comment):
          self.comment=comment
          self.save()
+
+
 
 
 

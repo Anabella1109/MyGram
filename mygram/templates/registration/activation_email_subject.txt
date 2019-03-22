@@ -1,3 +1,4 @@
-activation_key='12345abcde'
-expiration_days=7
-user=user
+{{activation_key}}
+{{expiration_days}}
+{{user.username}}
+{{site}}

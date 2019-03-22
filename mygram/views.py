@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http  import HttpResponse,Http404,HttpResponseRedirect
 from django.contrib.auth.models import User
-from .forms import NewPostForm, NewCommentForm
+from .forms import NewPostForm, NewCommentForm, Profileform
 from .email import send_welcome_email
 from django.contrib.auth.decorators import login_required
 from .models import Image, Profile, Comment
@@ -49,7 +49,7 @@ def like_post(request,id):
      post=Image.objects.get(id=id)
      post.likes+=1
      post.save()
-     return redirect('post',id=id)
+     return redirect('post',post.id)
 
 @login_required(login_url='/accounts/login/')
 def add_comment(request,id):
@@ -67,7 +67,7 @@ def add_comment(request,id):
         else:
                     form = NewCommentForm()
         return render(request, 'grams/new_comment.html', {"letterForm":form,'post':post,'user':current_user})
-
+@login_required(login_url='/accounts/login/')
 def search_results(request):
 
     if 'user' in request.GET and request.GET["user"]:
@@ -86,3 +86,28 @@ def search_results(request):
 def search_by_username(name):
        users=User.objects.filter(username__icontains=name)
        return users
+@login_required(login_url='/accounts/login/')
+def profile(request,id):
+     user=User.objects.get(id=id)
+     profile=Profile.objects.get(user=user)
+     return render(request, 'grams/profile.html',{"user":user,"profile": profile})
+     
+@login_required(login_url='/accounts/login/')
+def edit_profile(request,edit):
+    current_user = request.user
+    profile=Profile.objects.get(user=current_user)
+    
+   
+    if request.method == 'POST':
+        form = Profileform(request.POST, request.FILES)
+        if form.is_valid():
+            profile = form.save(commit=False)
+           
+            
+            
+            profile.save()
+        return redirect('home')
+
+    else:
+        form = Profileform()
+    return render(request, 'edit_profile.html', {"form": form , 'user':current_user})

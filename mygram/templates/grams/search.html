@@ -16,7 +16,7 @@
   {% if users %}
     {% for user in users %}
       <div class="row">
-         <a href=""> <p>{{user.username}}</p></a>
+         <a href="/profile/{{user.id}}"> <p>{{user.username}}</p></a>
       </div>
     {% endfor %}
   {% endif %}

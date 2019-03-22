@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from .forms import NewPostForm, NewCommentForm, Profileform
 from .email import send_welcome_email
 from django.contrib.auth.decorators import login_required
-from .models import Image, Profile, Comment
+from .models import Image, Profile, Comment, Follow
 from django.contrib.auth import authenticate, login 
 
 
@@ -90,7 +90,8 @@ def search_by_username(name):
 def profile(request,id):
      user=User.objects.get(id=id)
      profile=Profile.objects.get(user=user)
-     return render(request, 'grams/profile.html',{"user":user,"profile": profile})
+     images=Image.objects.filter(profile=profile)
+     return render(request, 'grams/profile.html',{"user":user,"profile": profile, 'images':images})
      
 @login_required(login_url='/accounts/login/')
 def edit_profile(request,edit):
@@ -111,3 +112,13 @@ def edit_profile(request,edit):
     else:
         form = Profileform()
     return render(request, 'edit_profile.html', {"form": form , 'user':current_user})
+
+
+@login_required(login_url='/accounts/login/')
+def follow(request,id):
+    current_user = request.user
+    profile2=Profile.objects.get(user=current_user)
+    profile1=Profile.objects.get(id=id)
+    follow=Follow(follower=profile2,following=profile1)
+    follow.save()
+    return redirect('profile',profile2.id)

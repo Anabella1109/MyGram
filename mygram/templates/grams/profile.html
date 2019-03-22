@@ -4,10 +4,16 @@
  {{block.super}}
  <div class="container">
    <div class="col-md-6">
- <img src="{{profile.photo.url}}" alt="">
+
 </div>
 <div class="col-md-6">
 <p>{{profile.bio}}</p>
+<a href="/follow/{{profile.id}}"><button>Follow</button></a>
+<div class="col-md-4">
+  {% for post in images %}
+  <a href="/post/{{post.id}}"> <img src="{{post.image.url}}" alt="" height="300"></a>
+  {% endfor %}
+</div>
   </div>
  </div>
 

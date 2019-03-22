@@ -10,6 +10,7 @@ class Profile(models.Model):
     photo=models.ImageField(upload_to='images/')
     bio=models.TextField()
     user=models.OneToOneField(User,on_delete=models.CASCADE,null=True)
+    follow=models.NullBooleanField(default=False)
     
     def save_profile(self):
         self.save()
@@ -19,6 +20,10 @@ class Profile(models.Model):
     def update_bio(self,bio):
          self.bio=bio
          self.save()
+    # @property
+    # def image_url(self):
+    #     if self.photo and hasattr(self.photo, 'url'):
+    #        return self.photo.url
 
 @receiver(post_save, sender=User)
 def update_user_profile(sender, instance, created, **kwargs):
@@ -44,6 +49,7 @@ class Image(models.Model):
      def update_caption(self,cap):
          self.caption=cap
          self.save()
+   
     
 class Comment(models.Model):
     comment=models.TextField()

@@ -59,7 +59,9 @@ class Comment(models.Model):
          self.save()
 
 
-
+class Follow(models.Model):
+     follower=models.ForeignKey(Profile, related_name='follower')
+     following=models.ForeignKey(Profile ,related_name='followee')
 
 
 

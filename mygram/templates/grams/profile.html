@@ -7,9 +7,9 @@
 <h5>{{user.username}}</h5>
 </div>
 <div class="col-md-6">
-  <img src="{{profile.photo.url}}" alt="" height='200' width='100'>
+  <img src="{{profile.photo.url}}" alt="" height='200' width='100' id='dp'>
 <p>{{user.profile.bio}}</p>
-<p>Followers:{{followers|length}}</p>
+<a href="/followers/{{profile.id}}"> <p>Followers:{{followers|length}}</p></a>
 <p>Following:{{following|length}}</p>
 <a href="/follow/{{profile.id}}"><button>Follow</button></a>
 

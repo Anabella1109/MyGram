@@ -1,0 +1,14 @@
+{%extends 'grams/base.html'%}
+
+{% block content %}
+{{block.super}}
+<div class="container">
+{% for post in followers %}
+<p>{{profile.user.username}}</p>
+
+
+
+
+{% endfor %}
+</div>
+{% endblock %}

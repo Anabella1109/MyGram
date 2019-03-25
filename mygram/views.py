@@ -14,14 +14,9 @@ def home(request):
      current_user=request.user
      profile=Profile.objects.get(user=current_user)
      following=Follow.objects.filter(follower=profile)
-     posts=Image.objects.filter(user=current_user)
-     for foll in following:
-         profile1=Profile.objects.get(follower=foll)
-         
-         images=Image.objects.filter(user=profile1.user)
-         posts=posts.union(images)
-
-     return render(request,'grams/home.html',{'title':title , 'posts':posts, 'following':following, 'images':images})
+     posts=Image.objects.all()
+    
+     return render(request,'grams/home.html',{'title':title , 'posts':posts, 'following':following})
 
 @login_required(login_url='/accounts/login/')
 def new_post(request):
@@ -131,9 +126,15 @@ def edit_profile(request,edit):
 def follow(request,id):
     current_user = request.user
     profile2=Profile.objects.get(user=current_user)
-    profile1=Profile.objects.get(id=id)
+    profile1=Profile.objects.get(user_id=id)
     follow=Follow(follower=profile2,following=profile1)
     follow.save()
     return redirect('profile', profile2.id)
 
+
+@login_required(login_url='/accounts/login/')
+def followers(request,id):
+     profile=Profile.objects.get(id=id)
+     followers=Follow.objects.filter(following=profile).distinct()
+     return render(request, 'followers.html', { 'followers':followers, 'profile':profile})
 

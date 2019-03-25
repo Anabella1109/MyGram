@@ -15,6 +15,7 @@ urlpatterns=[
     url(r'^edit_profile/(\d+)',views.edit_profile,name ='edit_profile') ,
     url(r'^profile/(\d+)',views.profile,name ='profile') ,
     url(r'^follow/(\d+)',views.follow,name ='follow') ,
+    url(r'^followers/(\d+)',views.followers,name ='followers') ,   
 
    
 ]

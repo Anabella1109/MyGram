@@ -3,16 +3,30 @@
 {% block content %}
 {{block.super}}
 <div class="container">
+ 
 {% for post in posts%}
-<p>{{post.user.username}}</p>
-<p>{{post.name}}</p>
-<a href="/post/{{post.id}}"> <img src="{{post.image.url}}" alt="" height="100"></a>
-<a href="/like_home/{{post.id}}"><button><i class="glyphicon glyphicon-heart glyphicon-lg"></i><span>{{post.likes}}</span></button></a>
-<a href="/new_comment/{{post.id}}"><button>Comment</button></a>
+<a href="profile/{{post.user.id}}">
+<div class="panel">
+  <div class="panel panel-header row"> 
+  <img src="{{post.user.profile.photo.url}}" alt="" height="auto" width="50" class="col-md-1" id="profile">
+<p class="col-md-6" id='name'>{{post.user.username}}</p>
+</div>
+</a>
+<!-- <p>{{post.name}}</p> -->
+<div class='panel panel-body'>
+<a href="/post/{{post.id}}"> <img src="{{post.image.url}}" alt="" id="post"></a>
+</div>
+<div class="panel panel-footer">
+<a href="/like_home/{{post.id}}"><button><i class="glyphicon glyphicon-heart glyphicon-lg"></i></button></a>
+<a href="/new_comment/{{post.id}}"><button><i class="	glyphicon glyphicon-comment"></i></button></a>
+<strong> <p>{{post.likes}} likes</p></strong>
+<span><p><strong> {{post.user.username}}</strong></span><span> {% autoescape on %}{{post.caption|safe}} {% endautoescape %}</span></p>
+</div>
+</div>
 {%endfor%}
 
-{%for foll in images %}
-<p>{{foll}}</p>
-{% endfor %}
 </div>
 {% endblock %}
+
+
+

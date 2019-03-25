@@ -9,23 +9,24 @@
 <nav class=" navbar-inverse" >
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="{% url 'home' %}" >MyGram</a>
+      <a class="navbar-brand" href="{% url 'home' %}" style="font-family: billabong;font-size:20px;">MyGram</a>
     </div>
    
-    <div class="col-sm-6 col-md-6">
+    <div class="navbar-right">
         {% if user.is_authenticated %}
+        <div>
+            <a href="{%url 'profile' user.id %}"><i class="glyphicon glyphicon-user" style="color:white;margin-top:10px;margin-right: 5px;"></i></a>
+          
+
         <ul>
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle btn btn-default" data-toggle="dropdown" role="button" aria-expanded="false">Account
-                      <span class="caret"></span>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="glyphicon glyphicon-option-vertical" style="color:white;margin-top:10px;margin-right: 5px;"></i>
+                      
                   </a>
             <ul class="dropdown-menu" role="menu">
               <li>
                 <a href="{%url 'home'%}">Home</a>
               </li>
-              <li>
-                  <a href="{%url 'profile' user.id %}">Profile</a>
-                </li>
 
                 <li>
                     <a href="{%url 'edit_profile' user.id %}">Edit Profile</a>
@@ -49,6 +50,7 @@
   
         {% endif %}
       </div>
+    </div>
     </div>
     
   </div>

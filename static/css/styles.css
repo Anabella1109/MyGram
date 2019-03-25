@@ -1,0 +1,28 @@
+body{
+  background-color: white;
+}
+@font-face{
+font-family: billabong;
+src: url('/static/font/Billabong.ttf');
+font-weight: bold;
+}
+
+h1{
+  font-family: billabong;
+}
+
+#profile{
+  width:80px;
+  height: 50px;
+  border-radius: 60%;
+  float:left;
+}
+#name{
+  font-size: 12px;
+  margin-top:13px;
+}
+
+#post{
+  height:60%;
+  width: 100%;
+}

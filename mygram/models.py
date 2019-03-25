@@ -31,6 +31,13 @@ def update_user_profile(sender, instance, created, **kwargs):
         Profile.objects.create(user=instance)
     instance.profile.save()
 
+
+class Follow(models.Model):
+     follower=models.ForeignKey(Profile, related_name='follower')
+     following=models.ForeignKey(Profile ,related_name='followee')
+     class Meta:     #you have to add abstract class
+        abstract = True
+
 class Image(models.Model):
      name=models.CharField(max_length=100)
      image=models.ImageField(upload_to = 'images/')
@@ -39,7 +46,9 @@ class Image(models.Model):
      pub_date = models.DateTimeField(auto_now_add=True)
      profile=models.ForeignKey(Profile, null=True)
      user=models.ForeignKey(User,on_delete=models.CASCADE,null=True)
-     
+     follow=models.ForeignKey('mygram.Follow', null=True)
+
+    
      def save_image(self):
          self.save()
 
@@ -66,8 +75,8 @@ class Comment(models.Model):
 
 
 class Follow(models.Model):
-     follower=models.ForeignKey(Profile, related_name='follower')
-     following=models.ForeignKey(Profile ,related_name='followee')
+     follower=models.ForeignKey(Profile, related_name='follower',unique=True)
+     following=models.ForeignKey(Profile ,related_name='followee',unique=True)
 
 
 

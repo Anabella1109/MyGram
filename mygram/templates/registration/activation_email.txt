@@ -1,4 +1,4 @@
 {{activation_key}}
 {{expiration_days}}
 {{user.username}}
-{{site}}
+http://{{ domain }}{% url 'registration_activate' activation_key %}

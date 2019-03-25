@@ -11,8 +11,17 @@ from django.contrib.auth import authenticate, login
 @login_required(login_url='/accounts/register/')
 def home(request):
      title='Home | MyGram'
-     posts=Image.objects.all()
-     return render(request,'grams/home.html',{'title':title , 'posts':posts})
+     current_user=request.user
+     profile=Profile.objects.get(user=current_user)
+     following=Follow.objects.filter(follower=profile)
+     posts=Image.objects.filter(user=current_user)
+     for foll in following:
+         profile1=Profile.objects.get(follower=foll)
+         
+         images=Image.objects.filter(user=profile1.user)
+         posts=posts.union(images)
+
+     return render(request,'grams/home.html',{'title':title , 'posts':posts, 'following':following, 'images':images})
 
 @login_required(login_url='/accounts/login/')
 def new_post(request):
@@ -90,8 +99,11 @@ def search_by_username(name):
 def profile(request,id):
      user=User.objects.get(id=id)
      profile=Profile.objects.get(user=user)
-     images=Image.objects.filter(profile=profile)
-     return render(request, 'grams/profile.html',{"user":user,"profile": profile, 'images':images})
+     images=Image.objects.filter(user=user)
+     following=Follow.objects.filter(follower=profile).distinct()
+     followers=Follow.objects.filter(following=profile).distinct()
+    
+     return render(request, 'grams/profile.html',{"user":user,"profile": profile, 'images':images,'following':following,'followers':followers})
      
 @login_required(login_url='/accounts/login/')
 def edit_profile(request,edit):
@@ -102,9 +114,10 @@ def edit_profile(request,edit):
     if request.method == 'POST':
         form = Profileform(request.POST, request.FILES)
         if form.is_valid():
-            profile = form.save(commit=False)
-           
             
+            profile.bio=form.cleaned_data['bio']
+            profile.photo = form.cleaned_data['photo']
+            profile.user=current_user
             
             profile.save()
         return redirect('home')
@@ -121,4 +134,6 @@ def follow(request,id):
     profile1=Profile.objects.get(id=id)
     follow=Follow(follower=profile2,following=profile1)
     follow.save()
-    return redirect('profile',profile2.id)
+    return redirect('profile', profile2.id)
+
+

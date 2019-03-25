@@ -6,9 +6,13 @@
 {% for post in posts%}
 <p>{{post.user.username}}</p>
 <p>{{post.name}}</p>
-<a href="/post/{{post.id}}"> <img src="{{post.image.url}}" alt="" height="300"></a>
+<a href="/post/{{post.id}}"> <img src="{{post.image.url}}" alt="" height="100"></a>
 <a href="/like_home/{{post.id}}"><button><i class="glyphicon glyphicon-heart glyphicon-lg"></i><span>{{post.likes}}</span></button></a>
 <a href="/new_comment/{{post.id}}"><button>Comment</button></a>
 {%endfor%}
+
+{%for foll in images %}
+<p>{{foll}}</p>
+{% endfor %}
 </div>
 {% endblock %}

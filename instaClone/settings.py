@@ -135,7 +135,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window; you may, of course, use a different value.
 
-
+LOGIN_REDIRECT_URL='home'
 
 
 # Email configurations remember to install python-decouple

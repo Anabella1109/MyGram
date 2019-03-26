@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'mygram',
     'tinymce',
     'bootstrap3',
+    'actstream',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -75,6 +76,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'instaClone.wsgi.application'
 
+SOUTH_MIGRATION_MODULES = {
+    'actstream': 'actstream.south_migrations',
+}
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
@@ -107,8 +111,14 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# Internationalization
+# ACTSTREAM_SETTINGS = {
+#     'MANAGER': 'mygram.managers.MyActionManager',
+#     'FETCH_RELATIONS': True,
+#     'USE_PREFETCH': True,
+  
+#     'GFK_FETCH_DEPTH': 1,
+# }
+#Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'

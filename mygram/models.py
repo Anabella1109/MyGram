@@ -6,11 +6,15 @@ from django.dispatch import receiver
 
 
 
+
+
 class Profile(models.Model):
     photo=models.ImageField(upload_to='images/')
     bio=models.TextField()
     user=models.OneToOneField(User,on_delete=models.CASCADE,null=True)
     follow=models.NullBooleanField(default=False)
+
+
     
     def save_profile(self):
         self.save()
@@ -20,10 +24,13 @@ class Profile(models.Model):
     def update_bio(self,bio):
          self.bio=bio
          self.save()
+   
     # @property
     # def image_url(self):
     #     if self.photo and hasattr(self.photo, 'url'):
     #        return self.photo.url
+
+# registry.register(Profile)
 
 @receiver(post_save, sender=User)
 def update_user_profile(sender, instance, created, **kwargs):

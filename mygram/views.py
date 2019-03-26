@@ -6,7 +6,8 @@ from .email import send_welcome_email
 from django.contrib.auth.decorators import login_required
 from .models import Image, Profile, Comment, Follow, Likes
 from django.contrib.auth import authenticate, login 
-impor
+from actstream.actions import follow, unfollow
+from actstream.models import following, followers
 
 
 @login_required(login_url='/accounts/register/')
@@ -109,10 +110,10 @@ def profile(request,id):
      user=User.objects.get(id=id)
      profile=Profile.objects.get(user=user)
      images=Image.objects.filter(user=user)
-     following=Follow.objects.filter(follower=profile).distinct()
-     followers=Follow.objects.filter(following=profile).distinct()
+     following1=following(user)
+     followers1=followers(profile)
     
-     return render(request, 'grams/profile.html',{"user":user,"profile": profile, 'images':images,'following':following,'followers':followers})
+     return render(request, 'grams/profile.html',{"user":user,"profile": profile, 'images':images,'following':following1,'followers':followers1})
      
 @login_required(login_url='/accounts/login/')
 def edit_profile(request,edit):
@@ -137,43 +138,13 @@ def edit_profile(request,edit):
 
 
 @login_required(login_url='/accounts/login/')
-def user_follow(request):
-    user_id = request.POST.get('id', None)
-    action = request.POST.get('action', '')
-
-    FOLLOW_ACTION = 'follow'
-    UNFOLLOW_ACTION = 'unfollow'
-
-    if request.user.is_anonymous:
-        return JsonResponse({
-            'status':'ko',
-            'message': 'You must login'}
-        )
-
-    if action not in [FOLLOW_ACTION, UNFOLLOW_ACTION]:
-        return JsonResponse({
-            'status':'ko',
-            'message': 'Unknown action {}'.format(action)}
-        )
-
-    try:
-        user = User.objects.get(id=user_id)
-        if action == UNFOLLOW_ACTION:
-            Contact.objects.filter(user_from=request.user,user_to=user).delete()
-            return JsonResponse({
-                'status':'ok'
-                })
-        else:
-            contact, created = Contact.objects.get_or_create( user_from=request.user, user_to=user)
-            return JsonResponse({
-                'status':'ok',
-                'message': 'Following id : {}'.format(contact.id)
-            })
-    return redirect('profile', id)
+def follow_profile(request,id):
+    profile=Profile.objects.get(id=id)
+    follow(request.user,profile)
+    return redirect('home')
 
 @login_required(login_url='/accounts/login/')
-def followers(request,id):
-     profile=Profile.objects.get(id=id)
-     followers=Follow.objects.filter(following=profile).distinct()
-     return render(request, 'followers.html', { 'followers':followers, 'profile':profile})
-
+def unfollow_profile(request,id):
+    profile=Profile.objects.get(id=id)
+    unfollow(request.user,profile)
+    return redirect('home')

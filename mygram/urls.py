@@ -14,7 +14,8 @@ urlpatterns=[
     url(r'^search/', views.search_results, name='search_results'),
     url(r'^edit_profile/(\d+)',views.edit_profile,name ='edit_profile') ,
     url(r'^profile/(\d+)',views.profile,name ='profile') ,
-    url(r'^follow/(\d+)',views.follow,name ='follow') ,
+    url(r'^follow/(\d+)',views.follow_profile,name ='follow') ,
+    url(r'^unfollow/(\d+)',views.unfollow_profile,name ='follow') ,
     url(r'^followers/(\d+)',views.followers,name ='followers') ,   
 
    

@@ -1,4 +1,5 @@
 {%extends 'grams/base.html'%}
+{% load activity_tags %}
 
  {% block content %}
  {{block.super}}
@@ -9,55 +10,11 @@
  </div>
  <div class="col-md-6">
    <div class="row">
-    {% with objects=user.followers.count %}
-    <span class="count">
-    <span class="total">
-      {{ objects }}
-    </span>
-      follower{{ objects|pluralize }}
-    </span>
-    <a href="#" data-id="{{ user.id }}" data-action="{% if request.user in user.followers.all %}un{% endif %}follow" class="follow button">
-      {% if request.user not in user.followers.all %}
-      Follow
-      {% else %}
-      Unfollow
-      {% endif %}
-    </a>
-
-{% block query %}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<script src=" http://cdn.jsdelivr.net/jquery.cookie/1.4.1/jquery.cookie.min.js "></script>
-<script>
-var csrftoken = $.cookie('csrftoken'); function csrfSafeMethod(method) {
-// these HTTP methods do not require CSRF protection
-return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method)); }
-$.ajaxSetup({
-beforeSend: function(xhr, settings) {
-if (!csrfSafeMethod(settings.type) && !this.crossDomain) { xhr.setRequestHeader("X-CSRFToken", csrftoken);
-} }
-});
-$(document).ready(function(){
-$('a.follow').click(function(e){
-  e.preventDefault();
-  $.post('{% url "user_follow" %}',
-  {
-    id: $(this).data('id'), action: $(this).data('action')
-  }, function(data){
-        if (data['status'] == 'ok') {
-          var previous_action = $('a.follow').data('action');
-          // toggle data-action $('a.follow').data('action',
-          previous_action == 'follow' ? 'unfollow' : 'follow'); // toggle link text
-  $('a.follow').text(
-       previous_action == 'follow' ? 'Unfollow' : 'Follow');
-  // update total followers
-  var previous_followers = parseInt(
-  $('span.count .total').text());
-  $('span.count .total').text(previous_action == 'follow' ? previous_followers + 1 : previous_followers - 1);
-  } }
-  ); });
-}); </script>
-
-{% endblock %}
+     {%if user.is_authenticated and user.profile == current_user.profile %}
+     <span> <h3 class="col-md-4">{{user.username}}</h3></span> <span> <a href="/edit_profile/{{user.id}}" class="col-md-3" id="follow"><button>Edit Profile</button></a></span>
+     {% else %}
+       <span> <h3 class="col-md-4">{{user.username}}</h3></span> <span> <a href="/follow/{{profile.id}}" class="col-md-3" id="follow"><button>Follow</button></a></span><span> <a href="/unfollow/{{profile.id}}" class="col-md-3" id="follow"><button>Unfollow</button></a></span>
+      {%endif%}
       </div>
 <p>{{user.profile.bio}}</p>
 <div class="row">

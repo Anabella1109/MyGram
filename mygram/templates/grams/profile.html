@@ -3,24 +3,80 @@
  {% block content %}
  {{block.super}}
  <div class="container">
-   <div class="col-md-6">
-<h5>{{user.username}}</h5>
-</div>
+
 <div class="col-md-6">
   <img src="{{profile.photo.url}}" alt="" height='200' width='100' id='dp'>
+ </div>
+ <div class="col-md-6">
+   <div class="row">
+    {% with objects=user.followers.count %}
+    <span class="count">
+    <span class="total">
+      {{ objects }}
+    </span>
+      follower{{ objects|pluralize }}
+    </span>
+    <a href="#" data-id="{{ user.id }}" data-action="{% if request.user in user.followers.all %}un{% endif %}follow" class="follow button">
+      {% if request.user not in user.followers.all %}
+      Follow
+      {% else %}
+      Unfollow
+      {% endif %}
+    </a>
+
+{% block query %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src=" http://cdn.jsdelivr.net/jquery.cookie/1.4.1/jquery.cookie.min.js "></script>
+<script>
+var csrftoken = $.cookie('csrftoken'); function csrfSafeMethod(method) {
+// these HTTP methods do not require CSRF protection
+return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method)); }
+$.ajaxSetup({
+beforeSend: function(xhr, settings) {
+if (!csrfSafeMethod(settings.type) && !this.crossDomain) { xhr.setRequestHeader("X-CSRFToken", csrftoken);
+} }
+});
+$(document).ready(function(){
+$('a.follow').click(function(e){
+  e.preventDefault();
+  $.post('{% url "user_follow" %}',
+  {
+    id: $(this).data('id'), action: $(this).data('action')
+  }, function(data){
+        if (data['status'] == 'ok') {
+          var previous_action = $('a.follow').data('action');
+          // toggle data-action $('a.follow').data('action',
+          previous_action == 'follow' ? 'unfollow' : 'follow'); // toggle link text
+  $('a.follow').text(
+       previous_action == 'follow' ? 'Unfollow' : 'Follow');
+  // update total followers
+  var previous_followers = parseInt(
+  $('span.count .total').text());
+  $('span.count .total').text(previous_action == 'follow' ? previous_followers + 1 : previous_followers - 1);
+  } }
+  ); });
+}); </script>
+
+{% endblock %}
+      </div>
 <p>{{user.profile.bio}}</p>
-<a href="/followers/{{profile.id}}"> <p>Followers:{{followers|length}}</p></a>
-<p>Following:{{following|length}}</p>
-<a href="/follow/{{profile.id}}"><button>Follow</button></a>
+<div class="row">
+<p class='col-md-4'>{{images|length}} posts</p>
+<a href="/followers/{{profile.id}}" class='col-md-4' style="color:black;"> <p>{{followers|length}} followers</p></a>
+<p class='col-md-4'>{{following|length}} following</p>
+</div>
+</div>
+<div id='posts'>
 
   {% for post in images %}
-  <div class="row">
+  
   <div class="col-md-4">
   <a href="/post/{{post.id}}"> <img src="{{post.image.url}}" alt="" height="300"></a>
 </div>
-</div>
+
 {% endfor %}
+</div>
   </div>
- </div>
+
 
  {% endblock %}

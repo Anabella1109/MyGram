@@ -4,8 +4,9 @@ from django.contrib.auth.models import User
 from .forms import NewPostForm, NewCommentForm, Profileform
 from .email import send_welcome_email
 from django.contrib.auth.decorators import login_required
-from .models import Image, Profile, Comment, Follow
+from .models import Image, Profile, Comment, Follow, Likes
 from django.contrib.auth import authenticate, login 
+impor
 
 
 @login_required(login_url='/accounts/register/')
@@ -26,7 +27,9 @@ def new_post(request):
         if form.is_valid():
             post = form.save(commit=False)
             post.user = current_user
-            post.likes=0
+            likes=Likes(likes=0,liked=False,user=current_user)
+            likes.save()
+            post.likes=likes
             
             post.save()
         return redirect('home')
@@ -38,22 +41,33 @@ def new_post(request):
 @login_required(login_url='/accounts/login/')
 def post(request,id):
     post=Image.objects.get(id=id)
+    number_of_likes = Likes.objects.filter(image=post).count()
+
     comments=Comment.objects.filter(image=post)
-    return render(request, 'grams/post.html', {"post": post, 'comments':comments})
+    return render(request, 'grams/post.html', {"post": post, 'comments':comments, 'likes':number_of_likes})
 
 @login_required(login_url='/accounts/login/')
-def like_home(request,id):
-     post=Image.objects.get(id=id)
-     post.likes+=1
-     post.save()
-     return redirect('home')
-
+def like_home(request,picture_id):
+    post=Image.objects.get(id=picture_id)
+    new_like, created = Likes.objects.get_or_create(user=request.user, image_id=picture_id)
+    number_of_likes = Likes.objects.filter(image=post).count()
+    post.likess=number_of_likes
+    post.save()
+    if not created:
+        message='U already liked the picture'
+    else:
+        message='like successful'
+    return redirect('home')
 @login_required(login_url='/accounts/login/')
-def like_post(request,id):
-     post=Image.objects.get(id=id)
-     post.likes+=1
-     post.save()
-     return redirect('post',post.id)
+def like_post(request, picture_id):
+    post=Image.objects.get(id=picture_id)
+    new_like, created = Likes.objects.get_or_create(user=request.user, image_id=picture_id)
+    if not created:
+        message='U already liked the picture'
+    else:
+        message='like successful'
+    return redirect('post',post.id)
+
 
 @login_required(login_url='/accounts/login/')
 def add_comment(request,id):
@@ -123,14 +137,39 @@ def edit_profile(request,edit):
 
 
 @login_required(login_url='/accounts/login/')
-def follow(request,id):
-    current_user = request.user
-    profile2=Profile.objects.get(user=current_user)
-    profile1=Profile.objects.get(user_id=id)
-    follow=Follow(follower=profile2,following=profile1)
-    follow.save()
-    return redirect('profile', profile2.id)
+def user_follow(request):
+    user_id = request.POST.get('id', None)
+    action = request.POST.get('action', '')
 
+    FOLLOW_ACTION = 'follow'
+    UNFOLLOW_ACTION = 'unfollow'
+
+    if request.user.is_anonymous:
+        return JsonResponse({
+            'status':'ko',
+            'message': 'You must login'}
+        )
+
+    if action not in [FOLLOW_ACTION, UNFOLLOW_ACTION]:
+        return JsonResponse({
+            'status':'ko',
+            'message': 'Unknown action {}'.format(action)}
+        )
+
+    try:
+        user = User.objects.get(id=user_id)
+        if action == UNFOLLOW_ACTION:
+            Contact.objects.filter(user_from=request.user,user_to=user).delete()
+            return JsonResponse({
+                'status':'ok'
+                })
+        else:
+            contact, created = Contact.objects.get_or_create( user_from=request.user, user_to=user)
+            return JsonResponse({
+                'status':'ok',
+                'message': 'Following id : {}'.format(contact.id)
+            })
+    return redirect('profile', id)
 
 @login_required(login_url='/accounts/login/')
 def followers(request,id):

@@ -33,12 +33,12 @@ def update_user_profile(sender, instance, created, **kwargs):
 
 
 
-
 class Image(models.Model):
      name=models.CharField(max_length=100)
      image=models.ImageField(upload_to = 'images/')
      caption=HTMLField()
-     likes=models.IntegerField()
+     likess=models.IntegerField(null=True)
+     
      pub_date = models.DateTimeField(auto_now_add=True)
      profile=models.ForeignKey(Profile, null=True)
      user=models.ForeignKey(User,on_delete=models.CASCADE,null=True)
@@ -54,7 +54,13 @@ class Image(models.Model):
      def update_caption(self,cap):
          self.caption=cap
          self.save()
-   
+
+class Likes(models.Model):
+    likes=models.IntegerField(default=0)
+    liked=models.BooleanField(default=False)
+    user=models.ForeignKey(User,on_delete=models.CASCADE,null=True)
+    image=models.ForeignKey(Image,null=True)
+    created = models.DateTimeField(auto_now_add=True)  
     
 class Comment(models.Model):
     comment=models.TextField()

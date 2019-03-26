@@ -26,3 +26,16 @@ h1{
   height:60%;
   width: 100%;
 }
+#dp{
+  width:140px;
+  height: 140px;
+  border-radius: 60%;
+  float:left;
+}
+#follow{
+  margin-top:15px;
+}
+
+#posts{
+  margin-top:20%;
+}

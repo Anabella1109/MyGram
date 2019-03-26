@@ -15,10 +15,12 @@ def home(request):
      title='Home | MyGram'
      current_user=request.user
      profile=Profile.objects.get(user=current_user)
-     following=Follow.objects.filter(follower=profile)
+     following1=following(request.user)
+
+     
      posts=Image.objects.all()
     
-     return render(request,'grams/home.html',{'title':title , 'posts':posts, 'following':following})
+     return render(request,'grams/home.html',{'title':title , 'posts':posts, 'following':following1})
 
 @login_required(login_url='/accounts/login/')
 def new_post(request):
@@ -148,3 +150,17 @@ def unfollow_profile(request,id):
     profile=Profile.objects.get(id=id)
     unfollow(request.user,profile)
     return redirect('home')
+
+
+@login_required(login_url='/accounts/login/')
+def who_following(request,id):
+    user=User.objects.get(id=id)
+    following1=following(user)
+    return render(request, 'following.html', {'user':request.user, 'following':following1})
+
+
+@login_required(login_url='/accounts/login/')
+def who_followers(request,id):
+    user=Profile.objects.get(id=id)
+    following1=followers(user)
+    return render(request, 'followers.html', {'user':request.user, 'following':following1})

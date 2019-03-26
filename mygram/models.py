@@ -9,7 +9,7 @@ from django.dispatch import receiver
 
 
 class Profile(models.Model):
-    photo=models.ImageField(upload_to='images/')
+    photo=models.ImageField(upload_to='images/',default='images/avatar.jpg')
     bio=models.TextField()
     user=models.OneToOneField(User,on_delete=models.CASCADE,null=True)
     follow=models.NullBooleanField(default=False)

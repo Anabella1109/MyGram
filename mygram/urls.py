@@ -16,7 +16,8 @@ urlpatterns=[
     url(r'^profile/(\d+)',views.profile,name ='profile') ,
     url(r'^follow/(\d+)',views.follow_profile,name ='follow') ,
     url(r'^unfollow/(\d+)',views.unfollow_profile,name ='follow') ,
-    url(r'^followers/(\d+)',views.followers,name ='followers') ,   
+    url(r'^followers/(\d+)',views.who_followers,name ='followers') ,   
+    url(r'^following/(\d+)',views.who_following,name ='following') , 
 
    
 ]

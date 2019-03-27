@@ -12,23 +12,25 @@
      <h1 class="text-center">{{post.name}}</h1>
    </div>
 
-   <div class="row">
-     {% autoescape on %}
-     {{post.caption| safe}}
-    {% endautoescape %}
-
-   </div>
+ 
   
   <a href="/like_post/{{post.id}}"><button><i class="glyphicon glyphicon-heart glyphicon-lg"></i><span>{{likes}}</span></button></a>
   <a href="/new_comment/{{post.id}}"><p> comments {{comments|length}}</p></a>
    <div class="row">
-     <p>Posted {{post.pub_date|timesince}} by {{post.user.username}}</p>
+      <strong>{{likes}} likes</strong>
+      <div class="row">
+      <span><p class="col-md-1"><strong> {{post.user.username}}</strong></span><span> {% autoescape on %}{{post.caption|safe}} {% endautoescape %}</span></p>
+    </div>
+     <p>{{post.pub_date|timesince|upper}} ago</p>
    </div>
-  <h3>Comments</h3>
+  <h4>Comments</h4>
   {% for comment in comments %}
-  <p>{{comment.user.username}}</p>
+ <strong> <p class="col-md-2">{{comment.user.username}}</p></strong>
     <p>{{comment.comment}}</p>
   {%endfor%}
  </div>
 
  {% endblock %}
+
+
+ 

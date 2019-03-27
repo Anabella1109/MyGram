@@ -143,13 +143,13 @@ def edit_profile(request,edit):
 def follow_profile(request,id):
     profile=Profile.objects.get(id=id)
     follow(request.user,profile)
-    return redirect('home')
+    return redirect('profile',profile.user.id)
 
 @login_required(login_url='/accounts/login/')
 def unfollow_profile(request,id):
     profile=Profile.objects.get(id=id)
     unfollow(request.user,profile)
-    return redirect('home')
+    return redirect('profile',profile.user.id)
 
 
 @login_required(login_url='/accounts/login/')

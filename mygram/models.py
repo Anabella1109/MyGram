@@ -44,7 +44,7 @@ class Image(models.Model):
      name=models.CharField(max_length=100)
      image=models.ImageField(upload_to = 'images/')
      caption=HTMLField()
-     likess=models.IntegerField(null=True)
+     likess=models.IntegerField(null=True,default=0)
      
      pub_date = models.DateTimeField(auto_now_add=True)
      profile=models.ForeignKey(Profile, null=True)
